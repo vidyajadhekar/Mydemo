@@ -5,7 +5,7 @@ jobs:
       - image: circleci/openjdk:11
     steps:
       - checkout
-      - run: echo "Hello, world!"
+      - run: echo "Hello, docker!"
   deploy:
     docker:
       - image: docker:20.10.9
@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build . -t docker-whale
+            docker build -t my-image .
       - run:
           name: Push Docker image to registry
           command: |
