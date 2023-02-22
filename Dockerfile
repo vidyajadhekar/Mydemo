@@ -5,8 +5,9 @@ FROM openjdk:11-jdk
 WORKDIR /app
 
 # Copy the application jar file to the container
-COPY target/my-application.jar my-application.jar
+COPY target/Mydemo.jar Mydemo.jar
 RUN gradle --no-daemon build -x test
 
 # Run the application
-CMD ["java", "-jar", "my-application.jar"]
+CMD ["java", "-jar", "Mydemo.jar"]
+
