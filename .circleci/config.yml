@@ -1,33 +1,20 @@
 version: 2.1
+
+orbs:
+  win: circleci/windows@5.0.0 # The Windows orb gives you everything you need to start using the Windows executor.
+
 jobs:
-  build:
-    docker:
-      - image: circleci/openjdk:11
+  hello-job:
+    executor:
+      name: win/default # executor type
+      size: "medium" # resource class, can be "medium", "large", "xlarge", "2xlarge", defaults to "medium" if not specified
+
     steps:
+      # Commands are run in a Windows virtual machine environment
       - checkout
-      - run: echo "Hello, docker!"
-  deploy:
-    docker:
-      - image: docker:20.10.9
-    steps:
-      - checkout
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t my-image .
-      - run:
-          name: Push Docker image to registry
-          command: |
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
-            docker push $DOCKERHUB_USERNAME/my-image:latest
+      - run: Write-Host 'Hello, Windows'
+
 workflows:
-  build-and-deploy:
+  my-workflow:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+      - hello-job
