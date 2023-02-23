@@ -1,5 +1,5 @@
 
-FROM openjdk:11-jdk
+FROM openjdk:11-stretch
 WORKDIR /app
 COPY Mydemo.java .
 RUN javac Mydemo.java

@@ -2,10 +2,10 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:11-jdk
+      - image: circleci/openjdk:11-stretch
     steps:
       - checkout
-      - run: javac Demo2Application.java
+      - run: echo "Hello, docker!"
   deploy:
     docker:
       - image: docker:20.10.9
