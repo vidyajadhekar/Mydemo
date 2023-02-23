@@ -1,7 +1,7 @@
 
-FROM openjdk:16-alpine
+FROM openjdk:11-stretch
 WORKDIR /app
 COPY Mydemo.java .
 RUN javac Mydemo.java
-CMD ["java", "HelloDocker"]
+CMD ["java", "Demo2Application"]
 
