@@ -2,6 +2,6 @@
 FROM openjdk:11-stretch
 WORKDIR /tmp/build
 COPY . .
-RUN javac Demo2Application.java
+RUN ./gradlew build
 CMD ["java", "Demo2Application"]
 
