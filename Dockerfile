@@ -1,7 +1,7 @@
 
 FROM openjdk:11-jdk
 WORKDIR /app
-COPY src /app/src
-RUN javac src/Demo2Application.java
-CMD ["java","src", "Demo2Application"]
+COPY Mydemo.java .
+RUN javac Mydemo.java
+CMD ["java", "Demo2Application"]
 
