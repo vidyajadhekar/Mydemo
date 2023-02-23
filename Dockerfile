@@ -2,6 +2,6 @@
 FROM openjdk:11-stretch
 WORKDIR /tmp/build
 COPY . .
-RUN maven --no-daemon build -x test
+EXPOSE 8080
 CMD ["java", "Demo2Application"]
 
