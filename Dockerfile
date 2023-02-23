@@ -1,7 +1,7 @@
 
 FROM openjdk:11-stretch
-WORKDIR /app
-COPY . /app
+WORKDIR /tmp/build
+COPY . .
 RUN javac Mydemo.java
 CMD ["java", "Demo2Application"]
 
