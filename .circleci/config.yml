@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t my-image .
+            docker build -it my-image .
       - run:
           name: Push Docker image to registry
           command: |
