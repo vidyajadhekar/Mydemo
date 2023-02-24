@@ -45,6 +45,7 @@ jobs:
                --set service.port=8080 \  
                --namespace default
           kubectl rollout status deployment/myapp
+
 workflows:
   build-and-deploy:
     jobs:
