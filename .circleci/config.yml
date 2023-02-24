@@ -21,17 +21,16 @@ jobs:
       - run:
           name: SonarCloud Analysis
           command: |
-            curl -LsS https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip -o build-wrapper-linux-x86.zip 
-            unzip build-wrapper-linux-x86.zip 
-            curl -LsS https://sonarcloud.io/static/cpp/sonar-scanner-cli-4.6.2.2472-linux.zip -o sonar-scanner-cli.zip 
-            unzip sonar-scanner-cli.zip 
-            export PATH="$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin" 
-            export SONAR_TOKEN=<your_SonarCloud_token> 
-            export SONAR_ORGANIZATION=<your_SonarCloud_organization>
-            export SONAR_PROJECT_KEY=<your_SonarCloud_project_key> 
-            export SONAR_PROJECT_NAME=<your_SonarCloud_project_name> 
-            export SONAR_PROJECT_VERSION=<your_SonarCloud_project_version> 
-            build-wrapper-linux-x86-64 --out-dir bw-output mvn clean install -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.projectName=$SONAR_PROJECT_NAME -Dsonar.projectVersion=$SONAR_PROJECT_VERSION
+            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            sudo npm install -g sonarqube-scanner
+            sonar-scanner \
+              -Dsonar.projectKey=1234 \
+              -Dsonar.organization=12 \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=232 \
+              -Dsonar.sources=./src \
+              -Dsonar.java.binaries=./target/classes
 workflows:
   build-and-deploy:
     jobs:
