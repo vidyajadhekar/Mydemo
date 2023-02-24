@@ -18,5 +18,4 @@ public class Demo2Application {
     public List<String> hello(){
 		return List.of("Hello", "docker!");
 }
-
 }
