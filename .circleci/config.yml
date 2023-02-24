@@ -24,6 +24,27 @@ jobs:
             echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
             docker push $DOCKERHUB_USERNAME/my-image:latest
+      - run:
+          name: Install Kubernetes CLI
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            sudo mv ./kubectl /usr/local/bin/kubectl
+      - run:
+           name: Install Helm
+           command: |
+             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - run:
+           name: Deploy to Kubernetes
+           command: |
+             helm upgrade --install myapp ./helm-chart \
+               --set image.repository=$DOCKER_USERNAME/myapp \
+               --set image.tag=$CIRCLE_SHA1 \
+               --set replicaCount=1 \
+               --set service.type=LoadBalancer \
+               --set service.port=8080 \  
+               --namespace default
+          kubectl rollout status deployment/myapp
 workflows:
   build-and-deploy:
     jobs:
