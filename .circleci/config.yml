@@ -1,4 +1,9 @@
 version: 2.1
+
+orbs:
+  helm: circleci/helm@1.2.0
+  aws-ecr: circleci/aws-ecr@6.15.3
+  kubernetes: circleci/kubernetes@0.11.2
 jobs:
   build:
     working_directory: /tmp/build
@@ -18,12 +23,7 @@ jobs:
           name: Build Docker image
           command: |
             docker build -t my-image .
-      - run:
-          name: Push Docker image to registry
-          command: |
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
-            docker push $DOCKERHUB_USERNAME/my-image:latest
+     
 
 workflows:
   build-and-deploy:
