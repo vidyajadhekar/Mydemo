@@ -48,10 +48,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build
+      - build-and-push-image
       - deploy:
           requires:
-            - build
+            -
           filters:
             branches:
               only: master
