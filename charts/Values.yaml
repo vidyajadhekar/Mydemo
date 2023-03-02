@@ -1,0 +1,10 @@
+model:
+  name: Mydemo
+  #imageRepoUrl: 128592509305.dkr.ecr.eu-central-1.amazonaws.com
+  imageRepoName: Mydemo
+  imageTag: latest
+  replica: 1
+  port: 8080
+  imagePullSecrets: aws-ecr
+  env:
+    imagePullPolicy: IfNotPresent
