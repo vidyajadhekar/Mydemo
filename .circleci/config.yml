@@ -23,12 +23,7 @@ jobs:
           name: Build Docker image
           command: |
             docker build -t my-image .
-      - run:
-          name: Push Docker image to registry
-          command: |
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
-            docker push $DOCKERHUB_USERNAME/my-image:latest
+      
 
   deploy-in-eks:
     docker:
