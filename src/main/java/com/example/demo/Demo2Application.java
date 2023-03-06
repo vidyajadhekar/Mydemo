@@ -17,5 +17,4 @@ public class Demo2Application {
 	@GetMapping
     public List<String> hello(){
 		return List.of("Hello", "docker!");
-}
-}
+}}

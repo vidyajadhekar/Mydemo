@@ -30,6 +30,25 @@ jobs:
             docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
             docker push $DOCKERHUB_USERNAME/my-image:latest
 
+  deploy-in-eks:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - kubernetes/install-kubectl:
+          kubectl-version: v1.24.0
+      - aws-cli/setup
+      - helm/install-helm-client:
+          version: v3.8.2
+      - run: echo -e "[profile <<parameters.profile>>]\nrole_arn = arn:aws:iam::<<parameters.aws_account_number>>:role/CICD\nsource_profile=default" >> ~/.aws/config
+      - run: aws sts get-caller-identity
+      - run: aws eks --region <<pipeline.parameters.default_aws_region>> list-clusters --profile <<parameters.profile>>
+      - run: aws eks --region <<pipeline.parameters.default_aws_region>> update-kubeconfig --name seed-selector-<<parameters.profile>> --profile <<parameters.profile>>
+      - run: cat ~/.kube/config
+      - run: cat ~/.aws/config
+      - run: cat ~/.aws/credentials
+      - run: kubectl get nodes
+
 workflows:
   build-and-deploy:
     jobs:
@@ -40,3 +59,7 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy-in-eks:
+          name: deploy-in-eks
+          requires:
+             -build
